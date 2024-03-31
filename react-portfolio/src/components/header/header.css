@@ -1,0 +1,118 @@
+
+#tushar {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    display: inline;
+}
+
+header {
+    padding-top: 1.5rem;
+    overflow: hidden;
+}
+
+.header__container {
+    text-align: center;
+    height: 100%;
+    position: relative;
+}
+
+/*===Code to action (CTA) ===========*/
+
+.cta {
+    margin-top: .5rem;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+/*=======Header socials=========*/
+
+.header__socials {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1rem;
+    position: fixed;
+    left: 5%;
+    top: 7.8rem;
+}
+
+/*
+.header__socials::after {
+    content: " ";
+    width: 1px;
+    height: 2rem;
+    background: var(--color-primary);
+}
+*/
+
+/*=====Image====*/
+/*
+.me {
+    background: var(--color-primary);
+    width: 25rem;
+    height: 30rem;
+    position: absolute;
+    left: calc(50%-11rem);
+    margin-top: 4rem;
+    border-radius: 12rem 12rem 0 0;
+    overflow: hidden;
+    padding: 5rem 1.5rem 1.5rem 1.5rem;
+}
+
+*/
+
+/*=======scroll down=========*/
+
+
+.scroll__down {
+    position: absolute;
+    right: 2.5rem;
+    bottom: 4rem;
+    font-weight: 500px;
+    font-size: 0.9rem;
+}
+
+/*==============Media queries for medium devices===========*/
+
+@media screen and (max-width: 1024px) {
+    header {
+        height: 80vh;
+    }
+}
+
+
+/*==============Media queries for small devices===========*/
+
+@media screen and (max-width: 600px) {
+    header {
+        height: 100vh;
+    }
+}
+
+
+
+h1 {
+    color: rgb(253, 253, 253);
+    position: relative;
+    text-decoration: none;
+  }
+
+  h1::before {
+    background: rgb(134, 1, 201);
+    content: "";
+    inset: 0;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease-in-out;
+    z-index: -1;
+  }
+
+  h1:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  
