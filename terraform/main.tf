@@ -12,12 +12,12 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = var.rgname
-  location = var.location
+  name     = "rg"
+  location = "centralindia"
 }
 
 resource "azurerm_storage_account" "STA" {
-  name                     = var.sname
+  name                     = "rgportstorage"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
