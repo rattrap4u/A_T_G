@@ -7,6 +7,11 @@ terraform {
     }
 }
 provider "azurerm" {
+    feature {}
+    client_id       = "your-client-id"
+    client_secret   = "your-client-secret"
+    subscription_id = "your-subscription-id"
+    tenant_id       = "your-tenant-id"
 }
 
 resource "azurerm_resource_group" "rg" {
