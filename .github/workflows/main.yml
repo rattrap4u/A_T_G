@@ -19,7 +19,12 @@ jobs:
         with:
           terraform_version: 0.14.8
 
-      - name: Configure Terraform
+      - name: Display Current Directory
+        run: |
+          pwd
+          ls -l
+
+      - name: Terraform Init
         run: |
           terraform init
 
