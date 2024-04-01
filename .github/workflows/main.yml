@@ -37,6 +37,7 @@ jobs:
 
       - name: Terraform Plan
         run: |
+          cd terraform
           terraform plan
         env:
           TF_IN_AUTOMATION: "true"
