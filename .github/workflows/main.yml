@@ -19,13 +19,14 @@ jobs:
         with:
           terraform_version: 0.14.8
 
+      - name: Navigate to Terraform Directory
+        run: cd terraform
+
       - name: Configure Terraform
-        run: |
-          terraform init
+        run: terraform init
 
       - name: Validate Terraform Configuration
-        run: |
-          terraform validate
+        run: terraform validate
 
       - name: Export Secrets as Environment Variables
         run: |
