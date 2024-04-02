@@ -1,22 +1,10 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=2.46.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg"
-  location = "centralindia"
+  name     = var.sname
+  location = var.location
 }
 
-resource "azurerm_storage_account" "STA" {
+resource "azurerm_storage_account" "rg" {
   name                     = "rgportstorage"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
