@@ -36,13 +36,12 @@ jobs:
         run: |
           terraform validate
 
-      - name: Export Secrets as Environment Variables
-        run: |
-          echo "export TF_VAR_client_id=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "export TF_VAR_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "export TF_VAR_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
-          echo "export TF_VAR_tenant_id=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
-
+          env:
+            TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+            TF_VAR_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+            TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+            TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      
       - name: Terraform Plan
         working-directory: terraform
         run: |
