@@ -83,7 +83,7 @@ jobs:
       env:
         TF_WORKSPACE: staging
         HOME: "/home/runner/digital-subscription/_work/"
-        TF_CLI_CONFIG_FILE: /home/runner/digital-subscription/_work/.terraformrc
+        TF_CLI_CONFIG_FILE: /home/runner/.terraformrc
 
 
     # Checks that all Terraform configuration files adhere to a canonical format
