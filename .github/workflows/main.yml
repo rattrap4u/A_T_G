@@ -44,6 +44,7 @@ jobs:
           echo "export TF_VAR_tenant_id=${{ secrets.AZURE_AD_TENANT_ID }}" >> $GITHUB_ENV
 
       - name: Terraform Plan
+        working-directory: terraform
         run: |
           terraform plan
         env:
