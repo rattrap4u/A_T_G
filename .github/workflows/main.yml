@@ -14,19 +14,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Terraform
+      - name: List files in the terraform directory
+        run: ls terraform
+
+      - name: Change directory to Terraform directory
+        run: cd terraform
+
+      - name: Print current directory
+        run: pwd
+
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.14.8
 
-      - name: Navigate to Terraform Directory
-        run: cd terraform
-
       - name: Configure Terraform
-        run: terraform init
+        run: |
+          terraform init
 
       - name: Validate Terraform Configuration
-        run: terraform validate
+        run: |
+          terraform validate
 
       - name: Export Secrets as Environment Variables
         run: |
