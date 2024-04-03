@@ -3,7 +3,7 @@ name: 'Terraform'
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
 
 permissions:
@@ -29,6 +29,9 @@ jobs:
     - name: Install Azure CLI
       run: |
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+    - name: Add Azure CLI to PATH
+      run: echo 'export PATH="$PATH:/usr/local/bin"' >> $GITHUB_ENV
 
     - name: Checkout
       uses: actions/checkout@v2
