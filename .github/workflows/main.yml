@@ -3,13 +3,14 @@ name: 'Terraform'
 on:
   push:
     branches:
-      - main
+    - main
   pull_request:
 
 permissions:
   id-token: write
   contents: read
   issues: write
+
 
 jobs:
   terraform:
@@ -18,7 +19,6 @@ jobs:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      PATH: ${{ github.workspace }}/azure-cli/bin:$PATH
     runs-on: ubuntu-latest
     environment: dev
 
@@ -27,20 +27,16 @@ jobs:
         shell: bash
 
     steps:
-    # - name: Check and install Azure CLI
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install -y curl gnupg lsb-release
-    #     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
-    # - name: Add Azure CLI to PATH
-    #   run: |
-    #     export PATH="${{ github.workspace }}/azure-cli/bin:$PATH"
-    #     az --version
-
     - name: Checkout
       uses: actions/checkout@v2
 
+    # - name: 'Terraform Format'
+    #   uses: hashicorp/terraform-github-actions@master
+    #   with:
+    #     tf_actions_version: 1.0.0
+    #     tf_actions_subcommand: 'fmt'
+    #     tf_actions_working_dir: "./terraform"
+        
     - name: 'Terraform Init'
       uses: hashicorp/terraform-github-actions@master
       with:
