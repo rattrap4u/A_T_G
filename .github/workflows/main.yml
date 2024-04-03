@@ -6,12 +6,6 @@ on:
     - main
   pull_request:
 
-permissions:
-  id-token: write
-  contents: read
-  issues: write
-
-
 jobs:
   terraform:
     name: 'Terraform'
