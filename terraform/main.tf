@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
-resource "azurerm_storage_account" "STA" {
+resource "azurerm_storage_account" "rgportstorage" {
   name                     = var.sname
   resource_group_name      = var.rgname
   location                 = var.location
