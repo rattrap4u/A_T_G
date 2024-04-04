@@ -46,7 +46,7 @@ resource "azurerm_storage_blob" "blob" {
   storage_container_name = "$web"
   type                 = "Block"
   content_type         = "text/html"
-  source_content       = "<div><h2>Hello World</h2><a href=\"https://precious-llama-151610.netlify.app/\">Click here to visit my Portfolio</a></div>"
+  source_content       = "<div><h2></h2><a href=\"https://precious-llama-151610.netlify.app/\">Click here to visit my Portfolio</a></div>"
 }
 
 
