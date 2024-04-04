@@ -1,64 +1,36 @@
-name: 'Terraform'
- 
+name: Deploy to Azure
+
 on:
   push:
-    branches:
-    - main
-  pull_request:
- 
+    branches: [ main ]  # Change to your desired branch
+
 jobs:
-  terraform:
-    name: 'Terraform'
-    env:
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      TF_VERSION: 1.5.7
+  deploy:
     runs-on: ubuntu-latest
-    environment: production
- 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
- 
     steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v2
- 
-    - name: 'Terraform Format'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.TF_VERSION }}
-        tf_actions_subcommand: 'fmt'
-        tf_actions_working_dir: "./terraform"
-         
-    - name: 'Terraform Init'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.TF_VERSION }}
-        tf_actions_subcommand: 'init'
-        tf_actions_working_dir: "./terraform"
- 
-    - name: 'Terraform Validate'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.TF_VERSION }}
-        tf_actions_subcommand: 'validate'
-        tf_actions_working_dir: "./terraform"
-         
-    - name: 'Terraform Plan'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.TF_VERSION }}
-        tf_actions_subcommand: 'plan'
-        tf_actions_working_dir: "./terraform"
- 
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.TF_VERSION }}
-        tf_actions_subcommand: 'apply'
-        tf_actions_working_dir: "./terraform"
+      - uses: actions/checkout@v3
+
+      - name: Login to Azure
+        uses: Azure/login@v1
+        with:
+          clientId: ${{ secrets.AZURE_CLIENT_ID }}
+          
+          tenantId: ${{ secrets.AZURE_TENANT_ID }}
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Configure Azure Provider (optional, if not using remote state)
+        uses: HashiCorp/terraform-init@v1
+        with:
+          backend: false
+
+      - name: Initialize Terraform
+        uses: HashiCorp/terraform-init@v1
+
+      - name: Plan Terraform changes (optional)
+        run: terraform plan
+
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve
+
+      - name: Optional: Destroy resources (for testing or cleanup)
+        run: terraform destroy -auto-approve  # Uncomment for testing or cleanup
