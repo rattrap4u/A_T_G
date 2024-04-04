@@ -1,43 +1,45 @@
-name: Deploy to Azure
+name: 'Terraform'
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  build-and-deploy:
+  terraform:
+    name: 'Terraform'
     runs-on: ubuntu-latest
-    env:
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-    
+    environment: production
+
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-        
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
 
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    
+      env:
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.5.7
 
     - name: Terraform Init
-      run: |
-        
-        terraform init
+      run:  terraform init
 
     - name: Terraform Plan
-      run: |
-        
-        terraform plan
+      run:  terraform plan
 
     - name: Terraform Apply
-      run: |
-        
-        terraform apply -auto-approve
+      run:  terraform apply -auto-approve
