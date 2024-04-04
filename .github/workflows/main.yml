@@ -1,4 +1,4 @@
-name: Terraform
+name: Deploy to Azure
 
 on:
   push:
@@ -6,49 +6,27 @@ on:
       - main
 
 jobs:
-  terraform:
-    name: Terraform
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: List files in the terraform directory
-        run: ls terraform
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.14.0
 
-      - name: Change directory to Terraform directory
-        run: cd terraform
+    - name: Terraform Init
+      run: terraform init
 
-      - name: Print current directory
-        run: pwd
+    - name: Terraform Plan
+      run: terraform plan
 
-
-
-      - name: Configure Terraform
-        run: |
-          terraform init
-
-      - name: Validate Terraform Configuration
-        run: |
-          terraform validate
-
-        env:
-          client_id: ${{ secrets.AZURE_CLIENT_ID }}
-          
-          subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          tenant_id: ${{ secrets.AZURE_TENANT_ID }}
-      
-      - name: Terraform Plan
-        working-directory: terraform
-        run: |
-          terraform plan
-        env:
-          TF_IN_AUTOMATION: "true"
-
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
-        run: |
-          terraform apply -auto-approve
-        env:
-          TF_IN_AUTOMATION: "true"
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
