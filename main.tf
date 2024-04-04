@@ -7,10 +7,10 @@ terraform {
   }
 }
 
-provider "azurerm" {
-  features {}
+# provider "azurerm" {
+#   features {}
   
-}
+# }
 
 # Create a resource group
 resource "azurerm_resource_group" "rg" {
