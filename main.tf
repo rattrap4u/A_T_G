@@ -9,8 +9,6 @@ terraform {
 
 provider "azurerm" {
   features {}
-  skip_provider_registration = true # Skip automatic provider registration
-
 }
 
 # Create a resource group
