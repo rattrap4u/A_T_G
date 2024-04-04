@@ -1,14 +1,14 @@
-name: 'Terraform'
- 
+name: Terraform Workflow
+
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
- 
+
 jobs:
   terraform:
-    name: 'Terraform'
+    name: Terraform
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -16,45 +16,34 @@ jobs:
       TF_VERSION: 1.5.7
     runs-on: ubuntu-latest
     environment: production
- 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+
     defaults:
       run:
         shell: bash
- 
+
     steps:
-    # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v2
   
-    # - name: 'Terraform Format'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: ${{ env.TF_VERSION }}
-    #     tf_actions_subcommand: 'fmt'
-    #     tf_actions_working_dir: "./terraform"
-         
-    - name: 'Terraform Init'
+    - name: Install Azure CLI
+      uses: Azure/CLI@v1
+      with:
+        azcliversion: latest
+
+    - name: Terraform Init
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: ${{ env.TF_VERSION }}
         tf_actions_subcommand: 'init'
         tf_actions_working_dir: "./terraform"
  
-    # - name: 'Terraform Validate'
-    #   uses: hashicorp/terraform-github-actions@master
-    #   with:
-    #     tf_actions_version: ${{ env.TF_VERSION }}
-    #     tf_actions_subcommand: 'validate'
-    #     tf_actions_working_dir: "./terraform"
-         
-    - name: 'Terraform Plan'
+    - name: Terraform Plan
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: ${{ env.TF_VERSION }}
         tf_actions_subcommand: 'plan'
         tf_actions_working_dir: "./terraform"
- 
+
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       uses: hashicorp/terraform-github-actions@master
