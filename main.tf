@@ -10,9 +10,6 @@ terraform {
 provider "azurerm" {
   features {}
   
-  client_id       = var.env.AZURE_CLIENT_ID
-  tenant_id       = var.env.AZURE_TENANT_ID
-  subscription_id = var.env.AZURE_SUBSCRIPTION_ID
 }
 
 # Create a resource group

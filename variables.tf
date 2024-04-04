@@ -9,10 +9,3 @@ variable "location" {
   default     = "centralindia"
   type        = string
 }
-variable "env" {
-  type = map(string)
-}
-variable "azure_client_id" {}
-variable "azure_client_secret" {}
-variable "azure_tenant_id" {}
-variable "azure_subscription_id" {}
